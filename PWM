@@ -1,0 +1,38 @@
+/*
+ * Copyright (c) 2014-2020 Arm Limited and affiliates.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+#include "mbed.h"
+
+// Adjust pin name to your board specification.
+// You can use LED1/LED2/LED3/LED4 if any is connected to PWM capable pin,
+// or use any PWM capable pin, and see generated signal on logical analyzer.
+PwmOut led(PWM_OUT);
+
+int main()
+{
+    int flag = 1;
+    float period = 0.05;
+    float duty = 0.10;
+    led.period(period);
+    while(1)
+{   
+
+    led.write(duty);
+    if(flag == 1)
+    {
+        duty += 0.10;
+        if(duty >= 0.9)
+        {flag = 0;}
+    }
+    wait_us(1000);
+    if(flag == 0){
+        duty -= 0.10;
+        if(duty <= 0.1)
+        {flag = 1;}
+    }
+    
+
+}   
+}
