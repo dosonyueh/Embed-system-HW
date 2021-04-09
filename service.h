@@ -17,7 +17,7 @@ public:
     char r;
     
     void updateButtonState(bool newState) {
-        char e[]={'r','0','8','5','2','2','8','2','8'};
+        char e[]={'r','0','8','5','2','2','8','3','4'};
         static int times;
         r=e[times];
         ble.gattServer().write(buttonState.getValueHandle(), (uint8_t *)&r, sizeof(char));
