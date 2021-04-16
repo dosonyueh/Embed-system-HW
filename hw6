@@ -1,0 +1,25 @@
+#include "mbed.h"
+#include "mbed_events.h"
+DigitalOut led(LED1);
+InterruptIn button(USER_BUTTON);
+Timeout press_threhold;
+void button_release_detecting()
+{
+    button.enable_irq();
+}
+void button_pressed()
+{
+    button.disable_irq();
+    press_threhold.attach(&button_release_detecting,1.0);
+}
+void button_released()
+{
+    led = !led;
+}
+int main()
+{
+EventQueue *queue = mbed_event_queue();
+button.fall(&button_pressed);
+button.rise(queue->event(button_released));
+queue->dispatch_forever();
+}
